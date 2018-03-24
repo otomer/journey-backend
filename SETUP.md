@@ -46,4 +46,12 @@ Download from https://robomongo.org/download
 * Pass: jadmin
 * Press Test (It should be all green) and then Save.
 * Select the created connection and you can now view the database
+
+# Run Project
+* Simply open your VSCode editor
+* Via Terminal, Run: 
+``` 
+npm start
+````
+* Navigate to http://localhost:3030/
  
