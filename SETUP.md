@@ -12,10 +12,6 @@ You can Download VSCode from https://code.visualstudio.com/download
 * Open cmd.exe, and navigate to c:\ or your favorite code folder
 * Run git clone https://github.com/otomer/journey-backend.git
 * You should have now c:\journey-backend folder
-* Navigate to the above folder, and run
-```
-npm install
-```
 
 ## Do Your first commit
 * Open Visual Studio Code
@@ -49,9 +45,14 @@ Download from https://robomongo.org/download
 
 # Run Project
 * Simply open your VSCode editor
-* Via Terminal, Run: 
+* Open the project folder (c:\journey-backend)
+* Open Terminal, run
+```
+npm install
+```
+* Now run:
 ``` 
 npm start
 ````
-* Navigate to http://localhost:3030/
+* Via your browser, Navigate to http://localhost:3030/
  
