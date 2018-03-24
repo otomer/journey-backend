@@ -1,10 +1,12 @@
 # Working with Github/Node/Mongodb
 
 ## Prerequisites
-* Node: Download & Install node from: https://nodejs.org/en/download/ (Choose LTS Version)
-* Git:  Download & Install git from: https://git-scm.com/downloads (Simple next-next installation)
-** To check if you already have it, open cmd.exe and run git.
-* Download Visual Studio Code from https://code.visualstudio.com/download / Or use your favorite IDE.
+### Node:
+Download & Install node from: https://nodejs.org/en/download/ (Choose LTS Version)
+### Git: 
+Download & Install git from: https://git-scm.com/downloads (Simple next-next installation) To check if you already have it, open cmd.exe and run git.
+### Visual Studio Code / Or use your favorite IDE
+You can Download VSCode from https://code.visualstudio.com/download 
 
 ## Copying our repo to your local drive
 Open cmd.exe, and navigate to c:\ or your favorite code folder
