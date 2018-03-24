@@ -27,3 +27,19 @@ git push
 ```
 * Open your browser in: https://github.com/otomer/journey-backend and verify you do see your change.
 
+# Database 
+## Robo3T (Database management & viewer tool)
+Download from https://robomongo.org/download
+
+### Add new database: 
+#### Connection settings:
+* Name: journey-db
+* Address: ds223019.mlab.com
+* Port: 23019
+#### Authentication tab:
+* Db name: journey-db
+* User: jadmin
+* Pass: jadmin
+* Press Test (It should be all green) and then Save.
+* Select the created connection and you can now view the database
+ 
