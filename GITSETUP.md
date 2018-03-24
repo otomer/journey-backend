@@ -1,8 +1,9 @@
-# Working with Github in the backend
+# Working with Github/Node/Mongodb
 
 ## Prerequisites
+* Node: Download & Install node from: https://nodejs.org/en/download/ (Choose LTS Version)
 * Git:  Download & Install git from: https://git-scm.com/downloads (Simple next-next installation)
-  To check if you already have it, open cmd.exe and run git.
+** To check if you already have it, open cmd.exe and run git.
 * Download Visual Studio Code from https://code.visualstudio.com/download / Or use your favorite IDE.
 
 ## Copying our repo to your local drive
