@@ -8,10 +8,14 @@ Download & Install git from: https://git-scm.com/downloads (Simple next-next ins
 #### Visual Studio Code / Or use your favorite IDE
 You can Download VSCode from https://code.visualstudio.com/download 
 
-## Copying our repo to your local drive
+## Preparing the Repository on your local drive
 * Open cmd.exe, and navigate to c:\ or your favorite code folder
 * Run git clone https://github.com/otomer/journey-backend.git
 * You should have now c:\journey-backend folder
+* Navigate to the above folder, and run
+```
+npm install
+```
 
 ## Do Your first commit
 * Open Visual Studio Code
