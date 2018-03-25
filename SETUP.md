@@ -3,6 +3,7 @@
 ## Prerequisites
 #### Node:
 Download & Install node from: https://nodejs.org/en/download/ (Choose LTS Version)
+##### Reboot after install node
 #### Git: 
 Download & Install git from: https://git-scm.com/downloads (Simple next-next installation) To check if you already have it, open cmd.exe and run git.
 #### Visual Studio Code / Or use your favorite IDE
