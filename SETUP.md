@@ -10,7 +10,10 @@ You can Download VSCode from https://code.visualstudio.com/download
 
 ## Preparing the Repository on your local drive
 * Open cmd.exe, and navigate to c:\ or your favorite code folder
-* Run git clone https://github.com/otomer/journey-backend.git
+* Run
+```
+git clone https://github.com/otomer/journey-backend.git
+```
 * You should have now c:\journey-backend folder
 
 ## Do Your first commit
@@ -51,6 +54,9 @@ Download from https://robomongo.org/download
 npm install
 ```
 * Now run:
+```
+npm install -g nodemon
+```
 ``` 
 npm start
 ````
