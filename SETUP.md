@@ -1,5 +1,7 @@
 # Working with Github/Node/Mongodb
 
+## If you don't have a Github user, pleaese create one first & Send it to Tomer so you will be considered as collaborator who has permissions to do project changes.
+
 ## Prerequisites
 #### Node:
 Download & Install node from: https://nodejs.org/en/download/ (Choose LTS Version)
