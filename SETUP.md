@@ -33,7 +33,7 @@ git push
 
 # Database 
 ## Robo3T (Database management & viewer tool)
-Download from https://robomongo.org/download
+Download from https://robomongo.org/download (Click the right Download Robo3T button)
 
 ### Add new database: 
 #### Connection settings:
