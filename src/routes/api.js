@@ -59,10 +59,11 @@ var router = function (mongoose) {
   //** Add OR Update (Add new Journey OR Update existing Journey data list  */
   //*********************************************************************** */  
   apiRouter.route("/journey/update").post(function(request, response){    
+    var reminderDate = new Date(request.body.reminderDate);
     var query = {clientID: request.body.memberId, expertID: request.body.expertId};    
     var journeyDataList = createJourneyDataList( request.body.title,
       request.body.text,
-      request.body.date,
+      reminderDate,
       request.body.isReminder,
       request.body.status,
       request.body.initiator);
