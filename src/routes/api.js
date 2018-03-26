@@ -84,7 +84,7 @@ var router = function (mongoose) {
     });
 */
 
-  /*
+  
   apiRouter.route("/journey/:memberId/:expertId").get(function(request, response){
     var res;
     models.Journey.find({"clientID":request.params.memberId, "expertID":request.params.expertId}, function(err, items){
@@ -94,7 +94,7 @@ var router = function (mongoose) {
       }
     });
   });
-  */
+  
 /*
   apiRouter.route("/journey/inseret").post(function (request, response) {
     let memberId = parseInt(request.body.memberId);
