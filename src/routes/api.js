@@ -79,7 +79,6 @@ var router = function(mongoose) {
  
   apiRouter.route("/pushUser/").post(function(request, response){
 
-<<<<<<< HEAD
     let clientID = parseInt(request.body.clientID);
     let oneSignalUserId = parseInt(request.body.oneSignalUserId);
 
@@ -99,26 +98,7 @@ var router = function(mongoose) {
       }
   });        
   });
-//   var entry = function(memberId, expertId, title, text, date, isReminder,status,initiator){
-//    return {
-//     "memberId":memberId,
-//     "expertId": expertId,
-//     "journeyDataList":[
-//       {
-//         "title":title,
-//         "text":text,
-//         "createdDate":Date.now,
-//         "date": date,
-//         "isReminder": isReminder,
-//         "status":status,
-//         "initiator": initiator
-//       }
-//     ]
-//   };
-// };
 
-=======
->>>>>>> 2331b4139f181e6238d5fb1c12fbf4d99bdc9bfd
   return apiRouter;
 };
 
