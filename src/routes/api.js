@@ -52,9 +52,9 @@ var router = function (mongoose) {
       });
   });
 
-  //******************************************************** */
-  //** Add new Journey OR Update existing Journey data list  */
-  //******************************************************** */  
+  //*********************************************************************** */
+  //** Add OR Update (Add new Journey OR Update existing Journey data list  */
+  //*********************************************************************** */  
   apiRouter.route("/journey/update").post(function(request, response){    
     var query = {clientID: request.body.memberId, expertID: request.body.expertId};    
     var update = {'$push': {journeyDataList:createJourneyDataList( request.body.title,
@@ -89,14 +89,13 @@ var router = function (mongoose) {
     return journeyDataList;
   };
 
-  //************************ */
-  //** Save Journey to DB    */
-  //************************ */
-  var saveToDb = function (memberId, expertId, title, text, reminderDate, isReminder, status, expertIsInitiator) {
+  /*   NOT IN USE  
+  var saveToDb = function (memberId, expertId, expertName, title, text, reminderDate, isReminder, status, expertIsInitiator) {
     
     var entry = new models.Journey({
       clientID: memberId,
       expertID: expertId,
+      expertName: expertName,
       journeyDataList: [createJourneyDataList(title, text, reminderDate,isReminder, status, expertIsInitiator)]
     });
 
@@ -109,7 +108,18 @@ var router = function (mongoose) {
         console.log('Journey was saved!');
       }
     });
+  };      */
+
+
+  //************************************      */
+  //** update Specific Field by DOC ID        */
+  //*************************************     */
+  var updateSpecificField = function (docID, fieldToUpdate, valueToUpdate){
+    var ret = models.Journey.update({_id: docID}, { '$set': {fieldToUpdate: valueToUpdate}}, function(err, res) { //.update({ _id: id }, { $set: { size: 'large' }}, callback);
+    callback(err, doc);
+    });
   };
+  
  
    //******************************** */
   //** Push notification to client    */
