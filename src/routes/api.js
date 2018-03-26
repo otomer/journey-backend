@@ -58,7 +58,6 @@ var router = function(mongoose) {
   apiRouter.route("/journey/update").post(function(request, response){
     let memberId = parseInt(request.body.memberId);
     let expertId = parseInt(request.body.expertId);
-    oneSignalAgent.sendNotification(request.body.memberId,request.body.date,request.body.expertId);
     saveToDb(memberId,
       expertId, 
       request.body.title, 
@@ -89,7 +88,6 @@ var router = function(mongoose) {
   entry.save(function (err) {
       if (err) {
           var errMsg = 'Error saving the Journey.' + err;
-          res.render('newJourney', { title: 'Journey - New Journey (error)', message: errMsg });
       }
       else {
           console.log('Journey was saved!');

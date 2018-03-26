@@ -1,37 +1,23 @@
-/* const request = require('request');
- 
-var request = require('request');
-request.post({
-  headers: {'content-type' : 'application/json; charset=utf-8',
-            'Authorization': 'Basic NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj'},
-  url:     'https://onesignal.com/api/v1/notifications',
-  body:    "mes=heydude"
-}, function(error, response, body){
-  console.log(body);
-}); */
+
 var https = require('https');
 var config = require('../../config');
 function oneSignalAgent() {}
 
-oneSignalAgent.prototype.sendNotification = function(clientID,reminderDate,expertName) { 
-    var playerId = getOneSignalUserId(clientID); 
-    this.buildNotification(playerId,reminderDate,expertName);  
-    this.apiCall("/api/v1/notifications",message);
-}
-
-oneSignalAgent.prototype.getOneSignalUserId = function(clientID) { 
-    var query = {clientID:clientID };
-    var OneSignalUserId = models.PushUser.findOne(query, function(err, items){
-        if (err) console.log(err);
-        else {
-          return items[0].OneSignalUserId;
-        }});
+oneSignalAgent.prototype.sendNotification = function(clientID,reminderDate,expertName,model) { 
+  var query = {"clientID":clientID };
+  var OneSignalUserId = model.findOne(query, function(err, items) 
+  {
+    if (err) console.log(err);
+    else {
+      var message = oneSignalAgent.prototype.buildNotification(items._doc.oneSignalUserId,reminderDate,expertName);  
+      oneSignalAgent.prototype.apiCall("/api/v1/notifications",message);
+  }});
 }
 
 oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expertName) {
 
     var result = { 
-        app_id: config.appID,
+        app_id: config.pushNotifications.appID,
         "include_player_ids": [playerId],
         isChromeWeb : true,
         send_after : reminderDate,
@@ -40,6 +26,7 @@ oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expe
             "en":"expert " + expertName + " update our journey for you.",
         }
     };
+    return result;
 }
 
 oneSignalAgent.prototype.apiCall = function(path,data) {
