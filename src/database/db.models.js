@@ -16,13 +16,10 @@ module.exports = function(mongoose) {
   });
   
   var journeySchema = new mongoose.Schema({
-    clientID: {
-      type: Number,
-      required: true},
-    expertID: {
-        type: Number,
-        required: true},
-    journeyDataList: [journeyDataList ]
+    clientID: { type: Number, required: true},
+    expertID: { type: Number, required: true},
+    journeyDataList: [journeyDataList ],
+    expertName: { type: String, required: false},
   });
 
   var PushUserSchema = new mongoose.Schema({
