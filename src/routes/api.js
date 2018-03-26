@@ -48,6 +48,9 @@ var router = function (mongoose) {
       function (err, doc) {
         if (err) 
           console.log(err);
+          doc.journeyDataList.sort(function(a,b){
+            return new Date(b.reminderDate) - new Date(a.reminderDate);
+       });
         response.send({ "journey": doc });
       });
   });
@@ -57,19 +60,20 @@ var router = function (mongoose) {
   //*********************************************************************** */  
   apiRouter.route("/journey/update").post(function(request, response){    
     var query = {clientID: request.body.memberId, expertID: request.body.expertId};    
-    var update = {'$push': {journeyDataList:createJourneyDataList( request.body.title,
+    var journeyDataList = createJourneyDataList( request.body.title,
       request.body.text,
       request.body.date,
       request.body.isReminder,
       request.body.status,
-      request.body.initiator)}};
+      request.body.initiator);
+    var update = {'$push': {journeyDataList:journeyDataList}};
     var ret = models.Journey.findOneAndUpdate(query,update, {upsert: true}, function(err, res) {//findAndModify({"query":query}, [], {"update":update}, function(err) {
      if (err) { 
          throw err;
      }
      else { 
            console.log("updated!");
-           response.send("OK");
+           response.send(journeyDataList);
           }
       });    
     });
