@@ -33,26 +33,7 @@ var router = function(mongoose) {
   });
   
 
-  // Insert Journey
-  apiRouter.route("/db/insertJourney").post(function(req, res) {    
-          var entry = new models.Journey({
-          clientID: req.body.clientID,
-          expertID: req.body.expertID,
-          journeyDataList: req.body.journeyDataList
-      });
-  
-      entry.save(function (err) {
-          if (err) {
-              var errMsg = 'Error saving the Journey.' + err;
-              res.render('newJourney', { title: 'Journey - New Journey (error)', message: errMsg });
-          }
-          else {
-              console.log('Journey was saved!');
-              // Redirect to the home page to display list of notes...
-              res.send("Inserted: " + res );
-          }
-      });        
-  }); 
+
   
 
   apiRouter.route("/journey/list/:memberId/:isExpert*?").get(function(request, response){
@@ -76,9 +57,8 @@ var router = function(mongoose) {
   apiRouter.route("/journey/update").post(function(request, response){
     let memberId = parseInt(request.body.memberId);
     let expertId = parseInt(request.body.expertId);
-    let insertDate = Date.now;
 
-    let newData = new entry(memberId,
+    saveToDb(memberId,
       expertId, 
       request.body.title, 
       request.body.text,
@@ -87,26 +67,55 @@ var router = function(mongoose) {
       request.body.status,
       request.body.initiator);
 
-      response.send(newData);
+      response.send("OK");
   });
 
-  var entry = function(memberId, expertId, title, text, date, isReminder,status,initiator){
-   return {
-    "memberId":memberId,
-    "expertId": expertId,
-    "journeyDataList":[
-      {
-        "title":title,
-        "text":text,
-        "createdDate":Date.now,
-        "date": date,
-        "isReminder": isReminder,
-        "status":status,
-        "initiator": initiator
+  var saveToDb = function(memberId, expertId,title,text, reminderDate, isReminder, status, expertIsInitiator){
+    var journeyDataList = new models.JourneyDataList({
+      title: title,
+    text: text,
+    reminderDate: reminderDate,
+    isReminder: isReminder,
+    status: status,
+    expertIsInitiator:expertIsInitiator 
+    });
+    var entry = new models.Journey({
+      clientID: memberId,
+      expertID: expertId,
+      journeyDataList: [journeyDataList]
+  });
+
+  entry.save(function (err) {
+      if (err) {
+          var errMsg = 'Error saving the Journey.' + err;
+          res.render('newJourney', { title: 'Journey - New Journey (error)', message: errMsg });
       }
-    ]
+      else {
+          console.log('Journey was saved!');
+          // Redirect to the home page to display list of notes...
+          // res.send("Inserted: " + res );
+      }
+  });        
   };
-};
+ 
+
+//   var entry = function(memberId, expertId, title, text, date, isReminder,status,initiator){
+//    return {
+//     "memberId":memberId,
+//     "expertId": expertId,
+//     "journeyDataList":[
+//       {
+//         "title":title,
+//         "text":text,
+//         "createdDate":Date.now,
+//         "date": date,
+//         "isReminder": isReminder,
+//         "status":status,
+//         "initiator": initiator
+//       }
+//     ]
+//   };
+// };
 
   return apiRouter;
 };

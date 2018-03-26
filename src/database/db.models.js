@@ -22,13 +22,14 @@ module.exports = function(mongoose) {
     expertID: {
         type: Number,
         required: true},
-    journeyDataList: [ journeyDataList ]
+    journeyDataList: [journeyDataList ]
   });
 
   
   var models = {
     Test: mongoose.model("Test", Test),
-    Journey: mongoose.model( 'Journey', journeySchema )
+    Journey: mongoose.model( 'Journey', journeySchema ),
+    JourneyDataList: mongoose.model( 'JourneyDataList', journeyDataList )
   };
 
   return models;
