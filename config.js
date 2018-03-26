@@ -13,6 +13,7 @@ module.exports = {
   },
   pushNotifications: {
     appID: "",
+    ApiKey: "MjRjZTc0NTAtYjdkNC00YTdiLWI5OWItNzljOTIwZDM5NTc2"
     
   }
 };
