@@ -48,6 +48,9 @@ var router = function (mongoose) {
       function (err, doc) {
         if (err) 
           console.log(err);
+          doc.journeyDataList.sort(function(a,b){
+            return new Date(b.createdDate) - new Date(a.createdDate);
+       });
         response.send({ "journey": doc });
       });
   });
@@ -69,7 +72,7 @@ var router = function (mongoose) {
      }
      else { 
            console.log("updated!");
-           response.send("OK");
+           response.send(res);
           }
       });    
     });
