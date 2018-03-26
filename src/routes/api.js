@@ -16,12 +16,14 @@ var router = function(mongoose) {
 
     var res;
     let findSet = isExpert?{"expertID":userId}: {"clientID":userId};
-    models.Journey.find(findSet, function(err, items){
-      if (err) console.log(err);
+    let querey = isExpert?{clientID:1, qty: 1, _id:0}: {expertID:1, qty: 1, _id:0};
+    models.Journey.find(findSet, querey , function(err, items){
+      if (err) {
+        console.log(err);
+        response.send({});
+      }
       else {
-        let partners = items[0].expertID;
-        response.send({"res":items,
-                       "userId":userId, "partners":partners});
+        response.send({"userId":userId, "partners":items});
       }
   });
 });

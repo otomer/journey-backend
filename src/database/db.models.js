@@ -38,7 +38,7 @@ module.exports = function(mongoose) {
     Test: mongoose.model("Test", Test),
     Journey: mongoose.model( 'Journey', journeySchema ),
     JourneyDataList: mongoose.model( 'JourneyDataList', journeyDataList ),
-    PushUser: mongoose.model( 'PushUserSchema', PushUser )
+    PushUser: mongoose.model( 'PushUserSchema', PushUserSchema )
   };
 
   return models;
