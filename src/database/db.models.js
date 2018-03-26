@@ -25,11 +25,20 @@ module.exports = function(mongoose) {
     journeyDataList: [journeyDataList ]
   });
 
+  var PushUserSchema = new mongoose.Schema({
+    clientID: {
+      type: Number,
+      required: true},
+    oneSignalUserId: {
+        type: String,
+        required: true}
+  });
   
   var models = {
     Test: mongoose.model("Test", Test),
     Journey: mongoose.model( 'Journey', journeySchema ),
-    JourneyDataList: mongoose.model( 'JourneyDataList', journeyDataList )
+    JourneyDataList: mongoose.model( 'JourneyDataList', journeyDataList ),
+    PushUser: mongoose.model( 'PushUserSchema', PushUserSchema )
   };
 
   return models;

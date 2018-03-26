@@ -1,5 +1,6 @@
 const express = require("express");
 const apiRouter = express.Router();
+const oneSignalAgent = require("../notifications/oneSiganlAgent");
 
 var router = function (mongoose) {
   var models = require("../database/db.models")(mongoose);
@@ -13,10 +14,19 @@ var router = function (mongoose) {
     let userId = parseInt(request.params.memberId, 10);
     let isExpert = request.params.isExpert == 'true' ? true : false;
 
-    response.send({ "userId": userId, "partners": [123430, 248478, 1665189, 63837] });
-    return;
-
+    var res;
+    let findSet = isExpert?{"expertID":userId}: {"clientID":userId};
+    let querey = isExpert?{clientID:1, qty: 1, _id:0}: {expertID:1, qty: 1, _id:0};
+    models.Journey.find(findSet, querey , function(err, items){
+      if (err) {
+        console.log(err);
+        response.send({});
+      }
+      else {
+        response.send({"userId":userId, "partners":items});
+      }
   });
+});
 
   var findByClientIDAndExpertID = function (findParams, callback) {
     models.Journey.findOne({ "clientID": findParams.clientID, "expertID": findParams.expertID }, function (err, doc) {
@@ -89,7 +99,7 @@ var router = function (mongoose) {
   apiRouter.route("/journey/inseret").post(function (request, response) {
     let memberId = parseInt(request.body.memberId);
     let expertId = parseInt(request.body.expertId);
-
+    oneSignalAgent.sendNotification(request.body.memberId,request.body.date,request.body.expertId);
     saveToDb(memberId,
       expertId,
       request.body.title,
@@ -132,7 +142,28 @@ var router = function (mongoose) {
       }
     });
   };
+ 
+  apiRouter.route("/pushUser/").post(function(request, response){
 
+    let clientID = parseInt(request.body.clientID);
+    let oneSignalUserId = parseInt(request.body.oneSignalUserId);
+
+    var pushUser = new models.pushUser({
+      clientID: clientID,
+      oneSignalUserId:oneSignalUserId
+    });
+
+  pushUser.save(function (err) {
+      if (err) {
+          var errMsg = 'Error saving push user: ' + err;
+          res.render('newPushUser', { title: 'saving push user (error)', message: errMsg });
+      }
+      else {
+          console.log('Push user was saved!');
+           res.send("New PushUserInserted: " + clientID );
+      }
+  });        
+  });
 
   return apiRouter;
 };
