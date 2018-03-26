@@ -1,78 +1,30 @@
 const express = require("express");
 const apiRouter = express.Router();
+const oneSignalAgent = require("../notifications/oneSiganlAgent");
 
-var router = function(mongoose) {
+var router = function (mongoose) {
   var models = require("../database/db.models")(mongoose);
 
-  apiRouter.route("/test").get(function(request, response) {
-    response.send("OK");
-  });
-
-  apiRouter.route("/db/get").get(function(request, response) {
-    models.Test.find({}, function(err, testItems) {
-      if (err) console.log(err);
-      else {
-        response.send({ testItems: testItems });
-      }
-<<<<<<< HEAD
-    });
-  });
-
-  apiRouter.route("/db/insert").get(function(request, response) {
-    var newTest = new models.Test({
-      name: "name " + new Date(),
-      text: "text"
-    });
-
-    models.Test.create(newTest, function(err, item) {
-      if (err) console.log(err);
-      else {
-        console.log("Inserted: " + item);
-        response.send("Inserted: " + item);
-      }
-    });
-  });
-  
-
-
-  
-
-  apiRouter.route("/journey/list/:memberId/:isExpert*?").get(function(request, response){
-    if(request.params.memberId <=0){
+  apiRouter.route("/journey/list/:memberId/:isExpert*?").get(function (request, response) {
+    if (request.params.memberId <= 0) {
       response.send({});
       return;
     }
 
-    let userId = parseInt(request.params.memberId, 10) ;
-    let isExpert = request.params.isExpert=='true'?true: false;
+    let userId = parseInt(request.params.memberId, 10);
+    let isExpert = request.params.isExpert == 'true' ? true : false;
 
-    response.send({"userId":userId, "partners":[123430, 248478, 1665189, 63837]});
-    return;
-
-  });
-
-  apiRouter.route("/journey/:memberId/:expertId").get(function(request, response){
-    response.send(new entry(parseInt(request.params.memberId),parseInt(request.params.expertId)));
-  });
-  
-  apiRouter.route("/journey/update").post(function(request, response){
-    let memberId = parseInt(request.body.memberId);
-    let expertId = parseInt(request.body.expertId);
-
-    saveToDb(memberId,
-      expertId, 
-      request.body.title, 
-      request.body.text,
-      request.body.date,
-      request.body.isReminder,
-      request.body.status,
-      request.body.initiator);
-
-      response.send("OK");
-  });
-
-  var saveToDb = function(memberId, expertId,title,text, reminderDate, isReminder, status, expertIsInitiator){
-=======
+    var res;
+    let findSet = isExpert?{"expertID":userId}: {"clientID":userId};
+    let querey = isExpert?{clientID:1, qty: 1, _id:0}: {expertID:1, qty: 1, _id:0};
+    models.Journey.find(findSet, querey , function(err, items){
+      if (err) {
+        console.log(err);
+        response.send({});
+      }
+      else {
+        response.send({"userId":userId, "partners":items});
+      }
   });
 });
   //********************************* */
@@ -100,9 +52,9 @@ var router = function(mongoose) {
       });
   });
 
-  //******************************************************** */
-  //** Add new Journey OR Update existing Journey data list  */
-  //******************************************************** */  
+  //*********************************************************************** */
+  //** Add OR Update (Add new Journey OR Update existing Journey data list  */
+  //*********************************************************************** */  
   apiRouter.route("/journey/update").post(function(request, response){    
     var query = {clientID: request.body.memberId, expertID: request.body.expertId};    
     var update = {'$push': {journeyDataList:createJourneyDataList( request.body.title,
@@ -126,44 +78,48 @@ var router = function(mongoose) {
   //** create NEW Journey Data List object  */
   //*************************************** */  
   var createJourneyDataList = function(title, text, reminderDate,isReminder, status, expertIsInitiator){
->>>>>>> 02ebbdb6750ff13afe6f1761bb8a089bfd8bcd8c
     var journeyDataList = new models.JourneyDataList({
       title: title,
-    text: text,
-    reminderDate: reminderDate,
-    isReminder: isReminder,
-    status: status,
-    expertIsInitiator:expertIsInitiator 
+      text: text,
+      reminderDate: reminderDate,
+      isReminder: isReminder,
+      status: status,
+      expertIsInitiator: expertIsInitiator
     });
-<<<<<<< HEAD
-=======
     return journeyDataList;
   };
 
-  //************************ */
-  //** Save Journey to DB    */
-  //************************ */
-  var saveToDb = function (memberId, expertId, title, text, reminderDate, isReminder, status, expertIsInitiator) {
+  /*   NOT IN USE  
+  var saveToDb = function (memberId, expertId, expertName, title, text, reminderDate, isReminder, status, expertIsInitiator) {
     
->>>>>>> 02ebbdb6750ff13afe6f1761bb8a089bfd8bcd8c
     var entry = new models.Journey({
       clientID: memberId,
       expertID: expertId,
-      journeyDataList: [journeyDataList]
-  });
+      expertName: expertName,
+      journeyDataList: [createJourneyDataList(title, text, reminderDate,isReminder, status, expertIsInitiator)]
+    });
 
-  entry.save(function (err) {
+    entry.save(function (err) {
       if (err) {
-          var errMsg = 'Error saving the Journey.' + err;
-          res.render('newJourney', { title: 'Journey - New Journey (error)', message: errMsg });
+        var errMsg = 'Error saving the Journey.' + err;
+        res.render('newJourney', { title: 'Journey - New Journey (error)', message: errMsg });
       }
       else {
-          console.log('Journey was saved!');
-          // Redirect to the home page to display list of notes...
-          // res.send("Inserted: " + res );
+        console.log('Journey was saved!');
       }
-  });        
+    });
+  };      */
+
+
+  //************************************      */
+  //** update Specific Field by DOC ID        */
+  //*************************************     */
+  var updateSpecificField = function (docID, fieldToUpdate, valueToUpdate){
+    var ret = models.Journey.update({_id: docID}, { '$set': {fieldToUpdate: valueToUpdate}}, function(err, res) { //.update({ _id: id }, { $set: { size: 'large' }}, callback);
+    callback(err, doc);
+    });
   };
+  
  
    //******************************** */
   //** Push notification to client    */
@@ -171,9 +127,9 @@ var router = function(mongoose) {
   apiRouter.route("/pushUser/").post(function(request, response){
 
     let clientID = parseInt(request.body.clientID);
-    let oneSignalUserId = request.body.oneSignalUserId;
+    let oneSignalUserId = parseInt(request.body.oneSignalUserId);
 
-    var pushUser = new models.PushUser({
+    var pushUser = new models.pushUser({
       clientID: clientID,
       oneSignalUserId:oneSignalUserId
     });
@@ -181,32 +137,14 @@ var router = function(mongoose) {
   pushUser.save(function (err) {
       if (err) {
           var errMsg = 'Error saving push user: ' + err;
-          response.render('newPushUser', { title: 'saving push user (error)', message: errMsg });
+          res.render('newPushUser', { title: 'saving push user (error)', message: errMsg });
       }
       else {
           console.log('Push user was saved!');
-          response.send("New PushUserInserted: " + clientID );
+           res.send("New PushUserInserted: " + clientID );
       }
-  
+  });        
   });
-});
-//   var entry = function(memberId, expertId, title, text, date, isReminder,status,initiator){
-//    return {
-//     "memberId":memberId,
-//     "expertId": expertId,
-//     "journeyDataList":[
-//       {
-//         "title":title,
-//         "text":text,
-//         "createdDate":Date.now,
-//         "date": date,
-//         "isReminder": isReminder,
-//         "status":status,
-//         "initiator": initiator
-//       }
-//     ]
-//   };
-// };
 
   return apiRouter;
 };
