@@ -3,6 +3,7 @@ const apiRouter = express.Router();
 
 var router = function(mongoose) {
   var models = require("../database/db.models")(mongoose);
+  
 
   apiRouter.route("/test").get(function(request, response) {
     response.send("OK");
@@ -30,6 +31,20 @@ var router = function(mongoose) {
         response.send("Inserted: " + item);
       }
     });
+  });
+
+  apiRouter.route("/journey/list/:memberId/:isExpert*?").get(function(request, response){
+    if(request.params.memberId <=0){
+      response.send({});
+      return;
+    }
+
+    let userId = parseInt(request.params.memberId, 10) ;
+    let isExpert = request.params.isExpert?true: false;
+
+    response.send({"userId":userId, "isExpert":isExpert});
+    return;
+
   });
 
   return apiRouter;
