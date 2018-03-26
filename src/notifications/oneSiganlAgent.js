@@ -10,33 +10,42 @@ request.post({
   console.log(body);
 }); */
 var https = require('https');
+var config = require('../../config');
 function oneSignalAgent() {}
 
 oneSignalAgent.prototype.sendNotification = function(clientID,reminderDate,expertName) { 
     var playerId = getOneSignalUserId(clientID); 
-    buildNotificationistory(playerId,reminderDate,expertName);  
-    ApiCall("/api/v1/notifications",message);
+    this.buildNotification(playerId,reminderDate,expertName);  
+    this.apiCall("/api/v1/notifications",message);
 }
 
+oneSignalAgent.prototype.getOneSignalUserId = function(clientID) { 
+    var query = {clientID:clientID };
+    var OneSignalUserId = models.PushUser.findOne(query, function(err, items){
+        if (err) console.log(err);
+        else {
+          return items[0].OneSignalUserId;
+        }});
+}
 
 oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expertName) {
 
     var result = { 
-        app_id: "df41d13a-481d-463a-88a1-d1f69a4e5c38",
+        app_id: config.appID,
         "include_player_ids": [playerId],
         isChromeWeb : true,
         send_after : reminderDate,
         chrome_web_icon : "/images/notificationIcon.png",    
         "contents":{
-            "en":"expert " + expertName + "update our journey for you.",
+            "en":"expert " + expertName + " update our journey for you.",
         }
     };
 }
 
-oneSignalAgent.prototype.ApiCall = function(path,data) {
+oneSignalAgent.prototype.apiCall = function(path,data) {
     var headers = {
        "Content-Type": "application/json; charset=utf-8",
-       "Authorization": "Basic NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj"
+       "Authorization": "ODcyZDU5NDctMzE3NC00NjY5LWFkYjUtODk2YmE4NDQ0ZTgy"
      };
 
      var options = {

@@ -1,5 +1,6 @@
 const express = require("express");
 const apiRouter = express.Router();
+const oneSignalAgent = require("oneSignalAgent");
 
 var router = function(mongoose) {
   var models = require("../database/db.models")(mongoose);
@@ -38,7 +39,7 @@ var router = function(mongoose) {
   apiRouter.route("/journey/update").post(function(request, response){
     let memberId = parseInt(request.body.memberId);
     let expertId = parseInt(request.body.expertId);
-
+    oneSignalAgent.sendNotification(request.body.memberId,request.body.date,request.body.expertId);
     saveToDb(memberId,
       expertId, 
       request.body.title, 

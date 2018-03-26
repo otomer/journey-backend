@@ -10,5 +10,9 @@ module.exports = {
     host: "ds223019.mlab.com",
     port: "23019",
     database: process.env.DB_NAME || "journey-db"
+  },
+  pushNotifications: {
+    appID: "",
+    
   }
 };
