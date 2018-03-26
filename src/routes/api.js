@@ -49,7 +49,7 @@ var router = function (mongoose) {
         if (err) 
           console.log(err);
           doc.journeyDataList.sort(function(a,b){
-            return new Date(b.createdDate) - new Date(a.createdDate);
+            return new Date(b.reminderDate) - new Date(a.reminderDate);
        });
         response.send({ "journey": doc });
       });
