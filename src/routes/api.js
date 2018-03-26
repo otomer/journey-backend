@@ -74,7 +74,10 @@ var router = function (mongoose) {
      }
      else { 
            console.log("updated!");
-           response.send(journeyDataList);
+           res.journeyDataList.sort(function(a,b){
+              return new Date(b.reminderDate) - new Date(a.reminderDate);
+          });
+           response.send(res);
           }
       });    
     });
