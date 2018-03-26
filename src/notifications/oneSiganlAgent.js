@@ -9,8 +9,10 @@ oneSignalAgent.prototype.sendNotification = function(clientID,reminderDate,exper
   {
     if (err) console.log(err);
     else {
-      var message = oneSignalAgent.prototype.buildNotification(items._doc.oneSignalUserId,reminderDate,expertName);  
-      oneSignalAgent.prototype.apiCall("/api/v1/notifications",message);
+      if(items != null && items._doc!= null){
+        var message = oneSignalAgent.prototype.buildNotification(items._doc.oneSignalUserId,reminderDate,expertName);  
+        oneSignalAgent.prototype.apiCall("/api/v1/notifications",message);
+      }   
   }});
 }
 
