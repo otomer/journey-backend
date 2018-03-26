@@ -12,7 +12,7 @@ module.exports = {
     database: process.env.DB_NAME || "journey-db"
   },
   pushNotifications: {
-    appID: "",
+    appID: "df41d13a-481d-463a-88a1-d1f69a4e5c38",
     
   }
 };
