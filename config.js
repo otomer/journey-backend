@@ -12,8 +12,11 @@ module.exports = {
     database: process.env.DB_NAME || "journey-db"
   },
   pushNotifications: {
+<<<<<<< HEAD
     appID: "",
     ApiKey: "MjRjZTc0NTAtYjdkNC00YTdiLWI5OWItNzljOTIwZDM5NTc2"
+=======
+>>>>>>> 85b41669a5c70913514435698150c7e8cc4e50fc
     
   }
 };
