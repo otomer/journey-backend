@@ -14,6 +14,7 @@ var router = function(mongoose) {
       else {
         response.send({ testItems: testItems });
       }
+<<<<<<< HEAD
     });
   });
 
@@ -71,6 +72,61 @@ var router = function(mongoose) {
   });
 
   var saveToDb = function(memberId, expertId,title,text, reminderDate, isReminder, status, expertIsInitiator){
+=======
+  });
+});
+  //********************************* */
+  //** Find DOC by Client & Expert ID */
+  //********************************* */
+  var findByClientIDAndExpertID = function (findParams, callback) {
+    models.Journey.findOne({ "clientID": findParams.clientID, "expertID": findParams.expertID }, function (err, doc) {
+      callback(err, doc);
+    });
+  };
+
+  //*************************************************** */
+  //** Print the Journey of a specific Client & Expert  */
+  //*************************************************** */
+  apiRouter.route("/journey/:memberId/:expertId").get(function (request, response) {
+    var doc = findByClientIDAndExpertID(
+      {
+        clientID: request.params.memberId,
+        expertID: request.params.expertId
+      },
+      function (err, doc) {
+        if (err) 
+          console.log(err);
+        response.send({ "journey": doc });
+      });
+  });
+
+  //******************************************************** */
+  //** Add new Journey OR Update existing Journey data list  */
+  //******************************************************** */  
+  apiRouter.route("/journey/update").post(function(request, response){    
+    var query = {clientID: request.body.memberId, expertID: request.body.expertId};    
+    var update = {'$push': {journeyDataList:createJourneyDataList( request.body.title,
+      request.body.text,
+      request.body.date,
+      request.body.isReminder,
+      request.body.status,
+      request.body.initiator)}};
+    var ret = models.Journey.findOneAndUpdate(query,update, {upsert: true}, function(err, res) {//findAndModify({"query":query}, [], {"update":update}, function(err) {
+     if (err) { 
+         throw err;
+     }
+     else { 
+           console.log("updated!");
+           response.send("OK");
+          }
+      });    
+    });
+     
+  //*************************************** */
+  //** create NEW Journey Data List object  */
+  //*************************************** */  
+  var createJourneyDataList = function(title, text, reminderDate,isReminder, status, expertIsInitiator){
+>>>>>>> 02ebbdb6750ff13afe6f1761bb8a089bfd8bcd8c
     var journeyDataList = new models.JourneyDataList({
       title: title,
     text: text,
@@ -79,6 +135,17 @@ var router = function(mongoose) {
     status: status,
     expertIsInitiator:expertIsInitiator 
     });
+<<<<<<< HEAD
+=======
+    return journeyDataList;
+  };
+
+  //************************ */
+  //** Save Journey to DB    */
+  //************************ */
+  var saveToDb = function (memberId, expertId, title, text, reminderDate, isReminder, status, expertIsInitiator) {
+    
+>>>>>>> 02ebbdb6750ff13afe6f1761bb8a089bfd8bcd8c
     var entry = new models.Journey({
       clientID: memberId,
       expertID: expertId,
@@ -98,6 +165,9 @@ var router = function(mongoose) {
   });        
   };
  
+   //******************************** */
+  //** Push notification to client    */
+  //********************************* */
   apiRouter.route("/pushUser/").post(function(request, response){
 
     let clientID = parseInt(request.body.clientID);
