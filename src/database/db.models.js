@@ -5,9 +5,34 @@ module.exports = function(mongoose) {
     text: String
   });
 
+  var journeyDataList = new mongoose.Schema({
+    title: String,
+    text: String,
+    createdDate: { type: Date, default: Date.now },
+    reminderDate: { type: Date, default: Date.now },
+    isReminder: { type: Boolean, default:false},
+    status: Number,
+    expertIsInitiator: { type: Boolean, default:false}
+  });
+  
+  var journeySchema = new mongoose.Schema({
+    clientID: {
+      type: Number,
+      required: true},
+    expertID: {
+        type: Number,
+        required: true},
+    journeyDataList: [ journeyDataList ]
+  });
+
+  
   var models = {
-    Test: mongoose.model("Test", Test)
+    Test: mongoose.model("Test", Test),
+    Journey: mongoose.model( 'Journey', journeySchema )
   };
 
   return models;
 };
+
+
+

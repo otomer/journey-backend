@@ -3,7 +3,6 @@ const apiRouter = express.Router();
 
 var router = function(mongoose) {
   var models = require("../database/db.models")(mongoose);
-  
 
   apiRouter.route("/test").get(function(request, response) {
     response.send("OK");
@@ -32,6 +31,29 @@ var router = function(mongoose) {
       }
     });
   });
+  
+
+  // Insert Journey
+  apiRouter.route("/db/insertJourney").post(function(req, res) {    
+          var entry = new models.Journey({
+          clientID: req.body.clientID,
+          expertID: req.body.expertID,
+          journeyDataList: req.body.journeyDataList
+      });
+  
+      entry.save(function (err) {
+          if (err) {
+              var errMsg = 'Error saving the Journey.' + err;
+              res.render('newJourney', { title: 'Journey - New Journey (error)', message: errMsg });
+          }
+          else {
+              console.log('Journey was saved!');
+              // Redirect to the home page to display list of notes...
+              res.send("Inserted: " + res );
+          }
+      });        
+  }); 
+  
 
   apiRouter.route("/journey/list/:memberId/:isExpert*?").get(function(request, response){
     if(request.params.memberId <=0){
