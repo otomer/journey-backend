@@ -134,29 +134,26 @@ var router = function (mongoose) {
   //********************************* */
   apiRouter.route("/pushUser/").post(function(request, response){
 
-    let clientID = parseInt(request.body.clientID);
-    let oneSignalUserId = request.body.oneSignalUserId;
+
+    var query = {clientID:request.body.clientID};    
 
     var pushUser = new models.PushUser({
-      clientID: clientID,
-      oneSignalUserId:oneSignalUserId
+      clientID: request.body.clientID,
+      oneSignalUserId:request.body.oneSignalUserId
     });
 
-  pushUser.save(function (err) {
-      if (err) {
-          var errMsg = 'Error saving push user: ' + err;
-          res.render('newPushUser', { title: 'saving push user (error)', message: errMsg });
-      }
-      else {
-          console.log('Push user was saved!');
-           response.send("New PushUserInserted: " + clientID );
-      }
-  });        
+    var update = {'$set': {PushUser:pushUser}};
+    var ret = models.PushUser.findOneAndUpdate(query,update, {upsert: true}, function(err, res) {//findAndModify({"query":query}, [], {"update":update}, function(err) {
+     if (err) { 
+         throw err;
+     }
+     else { 
+           console.log("Push user updated!");
+          }
+      });       
   });
 
   return apiRouter;
 };
-
-
 
 module.exports = router;
