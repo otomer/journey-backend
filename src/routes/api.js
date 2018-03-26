@@ -64,7 +64,7 @@ var router = function(mongoose) {
     let userId = parseInt(request.params.memberId, 10) ;
     let isExpert = request.params.isExpert=='true'?true: false;
 
-    response.send({"userId":userId, "partners":[321]});
+    response.send({"userId":userId, "partners":[123430, 248478, 1665189, 63837]});
     return;
 
   });
