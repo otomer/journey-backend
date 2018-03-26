@@ -1,6 +1,6 @@
 const express = require("express");
 const apiRouter = express.Router();
-const oneSignalAgent = require("oneSignalAgent");
+const oneSignalAgent = require("../notifications/oneSiganlAgent");
 
 var router = function(mongoose) {
   var models = require("../database/db.models")(mongoose);
