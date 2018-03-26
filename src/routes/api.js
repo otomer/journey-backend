@@ -98,7 +98,27 @@ var router = function(mongoose) {
   });        
   };
  
+  apiRouter.route("/pushUser/").post(function(request, response){
 
+    let clientID = parseInt(request.body.clientID);
+    let oneSignalUserId = parseInt(request.body.oneSignalUserId);
+
+    var pushUser = new models.pushUser({
+      clientID: clientID,
+      oneSignalUserId:oneSignalUserId
+    });
+
+  pushUser.save(function (err) {
+      if (err) {
+          var errMsg = 'Error saving push user: ' + err;
+          res.render('newPushUser', { title: 'saving push user (error)', message: errMsg });
+      }
+      else {
+          console.log('Push user was saved!');
+           res.send("New PushUserInserted: " + clientID );
+      }
+  });        
+  });
 //   var entry = function(memberId, expertId, title, text, date, isReminder,status,initiator){
 //    return {
 //     "memberId":memberId,
