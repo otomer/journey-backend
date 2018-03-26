@@ -45,7 +45,6 @@ oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expe
 oneSignalAgent.prototype.apiCall = function(path,data) {
     var headers = {
        "Content-Type": "application/json; charset=utf-8",
-       "Authorization": "ODcyZDU5NDctMzE3NC00NjY5LWFkYjUtODk2YmE4NDQ0ZTgy"
      };
 
      var options = {
