@@ -13,10 +13,17 @@ var router = function(mongoose) {
     let userId = parseInt(request.params.memberId, 10) ;
     let isExpert = request.params.isExpert=='true'?true: false;
 
-    response.send({"userId":userId, "partners":[123430, 248478, 1665189, 63837]});
-    return;
-
+    var res;
+    let findSet = isExpert?{"expertID":userId}: {"clientID":userId};
+    models.Journey.find(findSet, function(err, items){
+      if (err) console.log(err);
+      else {
+        let partners = items[0].expertID;
+        response.send({"res":items,
+                       "userId":userId, "partners":partners});
+      }
   });
+});
 
   apiRouter.route("/journey/:memberId/:expertId").get(function(request, response){
     var res;
