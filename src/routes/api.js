@@ -131,9 +131,9 @@ var router = function (mongoose) {
   apiRouter.route("/pushUser/").post(function(request, response){
 
     let clientID = parseInt(request.body.clientID);
-    let oneSignalUserId = parseInt(request.body.oneSignalUserId);
+    let oneSignalUserId = request.body.oneSignalUserId;
 
-    var pushUser = new models.pushUser({
+    var pushUser = new models.PushUser({
       clientID: clientID,
       oneSignalUserId:oneSignalUserId
     });
@@ -145,7 +145,7 @@ var router = function (mongoose) {
       }
       else {
           console.log('Push user was saved!');
-           res.send("New PushUserInserted: " + clientID );
+           response.send("New PushUserInserted: " + clientID );
       }
   });        
   });
