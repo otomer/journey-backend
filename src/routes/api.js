@@ -67,7 +67,7 @@ var router = function (mongoose) {
       request.body.isReminder,
       request.body.status,
       request.body.initiator);
-    var update = {'$push': {journeyDataList:journeyDataList}};
+    var update = {'$push': {journeyDataList:journeyDataList}, '$set':{expertName:request.body.expertName}};
     var ret = models.Journey.findOneAndUpdate(query,update, {upsert: true}, function(err, res) {//findAndModify({"query":query}, [], {"update":update}, function(err) {
      if (err) { 
          throw err;
