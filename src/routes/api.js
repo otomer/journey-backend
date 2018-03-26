@@ -4,38 +4,6 @@ const apiRouter = express.Router();
 var router = function(mongoose) {
   var models = require("../database/db.models")(mongoose);
 
-  apiRouter.route("/test").get(function(request, response) {
-    response.send("OK");
-  });
-
-  apiRouter.route("/db/get").get(function(request, response) {
-    models.Test.find({}, function(err, testItems) {
-      if (err) console.log(err);
-      else {
-        response.send({ testItems: testItems });
-      }
-    });
-  });
-
-  apiRouter.route("/db/insert").get(function(request, response) {
-    var newTest = new models.Test({
-      name: "name " + new Date(),
-      text: "text"
-    });
-
-    models.Test.create(newTest, function(err, item) {
-      if (err) console.log(err);
-      else {
-        console.log("Inserted: " + item);
-        response.send("Inserted: " + item);
-      }
-    });
-  });
-  
-
-
-  
-
   apiRouter.route("/journey/list/:memberId/:isExpert*?").get(function(request, response){
     if(request.params.memberId <=0){
       response.send({});
@@ -51,7 +19,13 @@ var router = function(mongoose) {
   });
 
   apiRouter.route("/journey/:memberId/:expertId").get(function(request, response){
-    response.send(new entry(parseInt(request.params.memberId),parseInt(request.params.expertId)));
+    var res;
+    models.Journey.find({"clientID":request.params.memberId, "expertID":request.params.expertId}, function(err, items){
+      if (err) console.log(err);
+      else {
+        response.send({"journey":items});
+      }
+    });
   });
   
   apiRouter.route("/journey/update").post(function(request, response){
@@ -92,14 +66,13 @@ var router = function(mongoose) {
       }
       else {
           console.log('Journey was saved!');
-          // Redirect to the home page to display list of notes...
-          // res.send("Inserted: " + res );
       }
   });        
   };
  
   apiRouter.route("/pushUser/").post(function(request, response){
 
+<<<<<<< HEAD
     let clientID = parseInt(request.body.clientID);
     let oneSignalUserId = parseInt(request.body.oneSignalUserId);
 
@@ -137,6 +110,8 @@ var router = function(mongoose) {
 //   };
 // };
 
+=======
+>>>>>>> 2331b4139f181e6238d5fb1c12fbf4d99bdc9bfd
   return apiRouter;
 };
 
