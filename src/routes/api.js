@@ -64,7 +64,7 @@ var router = function (mongoose) {
         clientID: request.body.memberId,
         expertID: request.body.expertId
       },
-      { $pull: { journeyDataList:  request.body.journeyItem } }
+      { $pull: { journeyDataList:  {id:request.body.journeyItem } }}
   ,function(err, res){
     if(err){
       throw err;
