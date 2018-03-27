@@ -136,15 +136,16 @@ var router = function (mongoose) {
   //********************************* */
   apiRouter.route("/pushUser/").post(function(request, response){
 
-
-    var query = {clientID:request.body.clientID};    
-
-    var pushUser = new models.PushUser({
+    /*var pushUser = new models.PushUser({
       clientID: request.body.clientID,
       oneSignalUserId:request.body.oneSignalUserId
     });
-
     var update = {'$set': {PushUser:pushUser}};
+    */
+
+   var query = {clientID:request.body.clientID};    
+    var update = {'$set': {clientID:request.body.clientID}, '$set':{oneSignalUserId:request.body.oneSignalUserId}};
+    
     var ret = models.PushUser.findOneAndUpdate(query,update, {upsert: true}, function(err, res) {//findAndModify({"query":query}, [], {"update":update}, function(err) {
      if (err) { 
          throw err;
