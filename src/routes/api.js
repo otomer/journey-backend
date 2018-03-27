@@ -79,7 +79,9 @@ var router = function (mongoose) {
           });
           console.log("updated! "+res.journeyDataList.length);
            response.send(res);
-           oneSignalAgent.prototype.sendNotification(request.body.memberId,request.body.date,request.body.expertName,models.PushUser);
+           if(request.body != null && typeof(request.body.date) != "undefined"){
+              oneSignalAgent.prototype.sendNotification(request.body.memberId,request.body.date,request.body.expertName,models.PushUser);
+           }
           }
       });    
     });
