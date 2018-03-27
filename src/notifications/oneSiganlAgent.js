@@ -3,20 +3,20 @@ var https = require('https');
 var config = require('../../config');
 function oneSignalAgent() {}
 
-oneSignalAgent.prototype.sendNotification = function(clientID,reminderDate,expertName,model) { 
+oneSignalAgent.prototype.sendNotification = function(clientID,reminderDate,expertName,model,messageText) { 
   var query = {"clientID":clientID };
   var OneSignalUserId = model.findOne(query, function(err, items) 
   {
     if (err) console.log(err);
     else {
       if(items != null && items._doc!= null){
-        var message = oneSignalAgent.prototype.buildNotification(items._doc.oneSignalUserId,reminderDate,expertName);  
+        var message = oneSignalAgent.prototype.buildNotification(items._doc.oneSignalUserId,reminderDate,expertName,messageText);  
         oneSignalAgent.prototype.apiCall("/api/v1/notifications",message);
       }   
   }});
 }
 
-oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expertName) {
+oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expertName,messageText) {
 
     var result = { 
         app_id: config.pushNotifications.appID,
@@ -25,7 +25,7 @@ oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expe
         send_after : reminderDate,
         chrome_web_icon : "https://img.onesignal.com/t/b47ad304-e334-4c09-9053-e6a29943f0bc.jpg",
         "contents":{
-            "en":"check our journey with " + expertName ,
+            "en":"Journey update: " +  messageText ,
         }
     };
     return result;

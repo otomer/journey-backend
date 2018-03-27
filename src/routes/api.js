@@ -104,8 +104,9 @@ var router = function (mongoose) {
               adjustDate.setDate(reminderDate.getDate());
               adjustDate.setMonth(reminderDate.getMonth());
               adjustDate.setFullYear(reminderDate.getFullYear());
-           }     
-          oneSignalAgent.prototype.sendNotification(request.body.memberId,adjustDate,request.body.expertName,models.PushUser);      
+           }    
+           request.body.expertName = ""; 
+          oneSignalAgent.prototype.sendNotification(request.body.memberId,adjustDate,request.body.expertName,models.PushUser,request.body.text);      
          
           }
       });    
