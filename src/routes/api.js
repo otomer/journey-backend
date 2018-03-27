@@ -73,10 +73,10 @@ var router = function (mongoose) {
          throw err;
      }
      else { 
-           console.log("updated!");
            res.journeyDataList.sort(function(a,b){
               return new Date(b.reminderDate) - new Date(a.reminderDate);
           });
+          console.log("updated! "+res.journeyDataList.length);
            response.send(res);
            oneSignalAgent.prototype.sendNotification(request.body.memberId,request.body.date,request.body.expertId,models.PushUser);
           }
