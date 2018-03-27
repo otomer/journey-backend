@@ -96,18 +96,12 @@ var router = function (mongoose) {
               return new Date(b.reminderDate) - new Date(a.reminderDate);
           });
           console.log("updated! "+res.journeyDataList.length);
-<<<<<<< HEAD
            response.send(res);
            
            if(reminderDate == null){
             reminderDate = Date.now();
-=======
-           response.send({"journey":res, "newJourneyItem":journeyDataList});
-           if(request.body != null && typeof(request.body.date) != "undefined"){
-              oneSignalAgent.prototype.sendNotification(request.body.memberId,request.body.date,request.body.expertName,models.PushUser);
->>>>>>> b8aa4313ce978c1da8433bad9262b55382efab54
-           }
-             oneSignalAgent.prototype.sendNotification(request.body.memberId,reminderDate,request.body.expertName,models.PushUser);      
+           }     
+          oneSignalAgent.prototype.sendNotification(request.body.memberId,reminderDate,request.body.expertName,models.PushUser);      
          
           }
       });    
