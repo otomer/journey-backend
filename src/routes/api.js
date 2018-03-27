@@ -106,7 +106,7 @@ var router = function (mongoose) {
               adjustDate.setFullYear(reminderDate.getFullYear());
            }    
   
-          oneSignalAgent.prototype.sendNotification(request.body.memberId,adjustDate,request.body.expertID,models.PushUser,request.body.text);      
+          oneSignalAgent.prototype.sendNotification(request.body.memberId,adjustDate,request.body.expertId,models.PushUser,request.body.text);      
          
           }
       });    
@@ -170,7 +170,8 @@ var router = function (mongoose) {
     });
     var update = {'$set': {PushUser:pushUser}};
     */
-
+   if(request.body.oneSignalUserId == null)
+      return
    var query = {clientID:request.body.clientID};    
     var update = {'$set': {clientID:request.body.clientID}, '$set':{oneSignalUserId:request.body.oneSignalUserId}};
     
