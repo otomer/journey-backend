@@ -100,7 +100,7 @@ var router = function (mongoose) {
           
            if(reminderDate != null){
               var adjustDate = new Date(Date.now())
-              adjustDate.setMinutes(adjustDate.getMinutes() + 2);
+              adjustDate.setMinutes(adjustDate.getMinutes() + 1);
               adjustDate.setDate(reminderDate.getDate());
               adjustDate.setMonth(reminderDate.getMonth());
               adjustDate.setFullYear(reminderDate.getFullYear());

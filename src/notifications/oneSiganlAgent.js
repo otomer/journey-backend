@@ -23,7 +23,7 @@ oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expe
         "include_player_ids": [playerId],
         isChromeWeb : true,
         send_after : reminderDate,
-        chrome_web_icon : "https:////expertsimages.kassrv.com/experts-pictures/big/pic" + expertId + ".jpg",
+        chrome_web_icon : "https://expertsimages.kassrv.com/experts-pictures/big/pic" + expertId + ".jpg",
         "contents":{
             "en":"Journey update: " +  messageText ,
         }
