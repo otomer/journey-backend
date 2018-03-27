@@ -96,7 +96,7 @@ var router = function (mongoose) {
               return new Date(b.reminderDate) - new Date(a.reminderDate);
           });
           console.log("updated! "+res.journeyDataList.length);
-           response.send(res);
+           response.send({"journey":res, "newJourneyItem":journeyDataList});
           
            if(reminderDate != null){
               var adjustDate = new Date(Date.now())
