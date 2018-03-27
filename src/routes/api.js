@@ -79,7 +79,7 @@ var router = function (mongoose) {
           });
           console.log("updated! "+res.journeyDataList.length);
            response.send(res);
-           oneSignalAgent.prototype.sendNotification(request.body.memberId,request.body.date,request.body.expertId,models.PushUser);
+           oneSignalAgent.prototype.sendNotification(request.body.memberId,request.body.date,request.body.expertName,models.PushUser);
           }
       });    
     });
