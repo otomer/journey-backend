@@ -97,11 +97,15 @@ var router = function (mongoose) {
           });
           console.log("updated! "+res.journeyDataList.length);
            response.send(res);
-           
-           if(reminderDate == null){
-            reminderDate = Date.now();
+          
+           if(reminderDate != null){
+              var adjustDate = new Date(Date.now())
+              adjustDate.setMinutes(adjustDate.getMinutes() + 2);
+              adjustDate.setDate(reminderDate.getDate());
+              adjustDate.setMonth(reminderDate.getMonth());
+              adjustDate.setFullYear(reminderDate.getFullYear());
            }     
-          oneSignalAgent.prototype.sendNotification(request.body.memberId,reminderDate,request.body.expertName,models.PushUser);      
+          oneSignalAgent.prototype.sendNotification(request.body.memberId,adjustDate,request.body.expertName,models.PushUser);      
          
           }
       });    
