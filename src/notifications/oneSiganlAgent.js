@@ -25,7 +25,7 @@ oneSignalAgent.prototype.buildNotification = function(playerId,reminderDate,expe
         send_after : reminderDate,
         chrome_web_icon : "https://img.onesignal.com/t/b47ad304-e334-4c09-9053-e6a29943f0bc.jpg",
         "contents":{
-            "en":"expert " + expertName + " update our journey for you.",
+            "en":"check our journey with " + expertName ,
         }
     };
     return result;
