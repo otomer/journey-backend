@@ -55,6 +55,24 @@ var router = function (mongoose) {
         response.send({ "journey": doc });
       });
   });
+  
+  apiRouter.route("/journey/remove").post(function(request, response){
+    console.log(request.body.memberId, request.body.expertId);
+    console.log(request.body.journeyItem);
+    models.Journey.findOneAndUpdate(
+      {
+        clientID: request.body.memberId,
+        expertID: request.body.expertId
+      },
+      { $pull: { journeyDataList:  request.body.journeyItem } }
+  ,function(err, res){
+    if(err){
+      throw err;
+    }else{
+      response.send(res);
+    }
+  });
+  });
 
   //*********************************************************************** */
   //** Add OR Update (Add new Journey OR Update existing Journey data list  */
