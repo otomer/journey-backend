@@ -51,6 +51,7 @@ var router = function (mongoose) {
           doc.journeyDataList.sort(function(a,b){
             return new Date(b.reminderDate) - new Date(a.reminderDate);
        });
+       console.log(doc.journeyDataList.length);
         response.send({ "journey": doc });
       });
   });
@@ -68,7 +69,7 @@ var router = function (mongoose) {
       request.body.status,
       request.body.initiator);
     var update = {'$push': {journeyDataList:journeyDataList}, '$set':{expertName:request.body.expertName}};
-    var ret = models.Journey.findOneAndUpdate(query,update, {upsert: true}, function(err, res) {//findAndModify({"query":query}, [], {"update":update}, function(err) {
+    var ret = models.Journey.findOneAndUpdate(query,update, {upsert: true, new :true}, function(err, res) {//findAndModify({"query":query}, [], {"update":update}, function(err) {
      if (err) { 
          throw err;
      }
