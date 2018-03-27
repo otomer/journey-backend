@@ -64,7 +64,7 @@ var router = function (mongoose) {
         clientID: request.body.memberId,
         expertID: request.body.expertId
       },
-      { $pull: { journeyDataList:  {_id:request.body.journeyItem } }}
+      { $pull: { journeyDataList:  {_id:request.body.journeyItem } }},{new:true}
   ,function(err, res){
     if(err){
       throw err;
@@ -96,7 +96,7 @@ var router = function (mongoose) {
               return new Date(b.reminderDate) - new Date(a.reminderDate);
           });
           console.log("updated! "+res.journeyDataList.length);
-           response.send(res);
+           response.send({"journey":res, "newJourneyItem":journeyDataList});
           
            if(reminderDate != null){
               var adjustDate = new Date(Date.now())
