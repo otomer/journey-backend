@@ -1,6 +1,6 @@
 module.exports = {
   server: {
-    port: process.env.PORT || "<port>,
+    port: process.env.PORT || "<port>",
     host: process.env.HOST || "localhost"
   },
   database: {
