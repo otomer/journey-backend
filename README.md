@@ -3,11 +3,7 @@
 Journey tasks over timeline. The next project was conducted during a 24-hours Hackathon in LivePerson (B2C) company.
 
 ## Contributors
--Tomer
--Rani
--Yaniv
--Eliran
--Perry
+[otomer](https://github.com/otomer), [yan101](https://github.com/yan101), [ranilo](https://github.com/ranilo), [perryya](https://github.com/perryya), [EliranG](https://github.com/EliranG)
 
 ## Goal
 
